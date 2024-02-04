@@ -1,0 +1,24 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile Camera Example</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-glCJ8ELmMA7kVjR5ofT2LbC2UwTk+6wc7hwa17g0aiE9Uq/6tQugrJw9Zvx4t+pk" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="thumbnails.css">
+</head>
+<body>
+  <button onclick="openCamera()"><i class="fas fa-video"></i> Open Camera</button>
+  <button onclick="closeCamera()"><i class="fas fa-times-circle"></i> Close Camera</button>
+  <button onclick="capturePicture()"><i class="fas fa-camera"></i> Capture Picture</button>
+  <button onclick="removeLastPicture()"><i class="fas fa-trash-alt"></i> Remove Last Picture</button>
+  <div id="imageGrid" class="thumbnails"></div>
+  <div id="noPicturesMessage" style="display: none;">No pictures available</div>
+  <video id="video" autoplay></video>
+  <canvas id="canvas" style="display: none;"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
