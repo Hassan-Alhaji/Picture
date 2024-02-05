@@ -1,78 +1,60 @@
-// script.js
-let stream;
-let capturedImages = [];
-
-async function openCamera() {
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-    const videoElement = document.getElementById('video');
-    videoElement.srcObject = stream;
-  } catch (error) {
-    console.error('Error accessing camera:', error);
-  }
+/* styles.css */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
-function closeCamera() {
-  if (stream) {
-    const tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
-    const videoElement = document.getElementById('video');
-    videoElement.srcObject = null;
-    capturedImages = [];
-    updateImageGrid();
-  }
+.container {
+  max-width: 800px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
 }
 
-function capturePicture() {
-  const videoElement = document.getElementById('video');
-  const canvas = document.getElementById('canvas');
-  
-  if (stream && capturedImages.length < 9) {
-    const capturedImage = document.createElement('img');
-    capturedImage.src = captureFrame(videoElement, canvas);
-    capturedImages.push(capturedImage.src);
-    updateImageGrid();
-  } else {
-    alert('You have reached the maximum limit of 9 captures or the camera is not open.');
-  }
+header {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
-function removeLastPicture() {
-  if (capturedImages.length > 0) {
-    capturedImages.pop();
-    updateImageGrid();
-  }
+h1 {
+  color: #333;
 }
 
-function updateImageGrid() {
-  const imageGrid = document.getElementById('imageGrid');
-  const noPicturesMessage = document.getElementById('noPicturesMessage');
-
-  while (imageGrid.firstChild) {
-    imageGrid.removeChild(imageGrid.firstChild);
-  }
-
-  capturedImages.forEach(imageSrc => {
-    const capturedImage = document.createElement('img');
-    capturedImage.src = imageSrc;
-    imageGrid.appendChild(capturedImage);
-  });
-
-  noPicturesMessage.style.display = capturedImages.length === 0 ? 'block' : 'none';
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-function captureFrame(videoElement, canvas) {
-  const context = canvas.getContext('2d');
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  canvas.width = 100;
-  canvas.height = (videoElement.videoHeight / videoElement.videoWidth) * canvas.width;
+button:hover {
+  background-color: #45a049;
+}
 
-  context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+.thumbnails img {
+  max-width: 100%;
+  height: auto;
+  margin: 5px;
+  border-radius: 5px;
+}
 
-  const imageData = canvas.toDataURL('image/png');
-
-  canvas.width = videoElement.videoWidth;
-  canvas.height = videoElement.videoHeight;
-
-  return imageData;
+#video {
+  width: 100%;
+  border-radius: 5px;
 }
